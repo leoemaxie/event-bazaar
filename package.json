@@ -1,0 +1,23 @@
+{
+  "name": "ticket-marketplace",
+  "version": "1.0.0",
+  "description": "Ticket martketplace to register and buy tickets",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leoemaxie/ticket-marketplace.git"
+  },
+  "author": "koecha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leoemaxie/ticket-marketplace/issues"
+  },
+  "homepage": "https://github.com/leoemaxie/ticket-marketplace#readme",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "hardhat": "^2.12.2"
+  }
+}
