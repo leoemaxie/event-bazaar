@@ -1,7 +1,6 @@
 import Category from "../components/Category";
 import Hero from "../components/Hero";
 import UpcomingEvents from "../components/UpcomingEvents";
-import SellTicket from "../components/SellTicket";
 
 const Home = () => {
     return (
@@ -9,7 +8,6 @@ const Home = () => {
             <Hero />
             <Category />
             <UpcomingEvents />
-            <SellTicket />
         </div>
     )
 }

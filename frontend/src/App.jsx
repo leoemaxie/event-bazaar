@@ -3,6 +3,8 @@ import Navbar from "./components/Navbar";
 import Home from './pages/Home';
 import Event from './pages/Event';
 import Footer from "./components/Footer";
+import ReachUs from './components/ReachUs';
+import SellTicket from "./components/SellTicket";
 
 
 export default function App() {
@@ -16,6 +18,8 @@ export default function App() {
             <Route path='/eventplace' element={<Event />} />
           </Routes>
         </>
+        <SellTicket />
+        <ReachUs />
         <Footer />
       </BrowserRouter>
     </div>
