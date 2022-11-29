@@ -1,5 +1,5 @@
 import EventCards from '../components/EventCards'
-import { upcomingEvents } from '../../event'
+import upcomingEvents from '../../event'
 import EventHeader from '../components/EventHeader'
 
 

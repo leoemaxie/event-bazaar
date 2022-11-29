@@ -1,10 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
+import EventContextProvider from './contexts/eventContext'
+import FormContextProvider from './contexts/FormContext'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <EventContextProvider>
+      <FormContextProvider>
+        <App />
+      </FormContextProvider>
+    </EventContextProvider>
   </React.StrictMode>
 )

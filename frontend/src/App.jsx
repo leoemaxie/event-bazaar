@@ -5,6 +5,7 @@ import Event from './pages/Event';
 import Footer from "./components/Footer";
 import ReachUs from './components/ReachUs';
 import SellTicket from "./components/SellTicket";
+import CreateEvent from './pages/CreateEvent';
 
 
 export default function App() {
@@ -16,6 +17,7 @@ export default function App() {
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/eventplace' element={<Event />} />
+            <Route path='/createEvent' element={<CreateEvent />} />
           </Routes>
         </>
         <SellTicket />

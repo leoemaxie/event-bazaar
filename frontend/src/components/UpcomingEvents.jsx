@@ -1,11 +1,11 @@
 import React from 'react'
 import EventCards from './EventCards'
 import EventHeader from './EventHeader'
-import { upcomingEvents } from '../../event'
+import upcomingEvents from '../../event'
 
 const UpcomingEvents = () => {
     return (
-        <div className='px-8 md:px-12 lg:px-20 py-8 2xl:px-0'>
+        <div className='px-8 md:px-12 lg:px-20 py-8 2xl:px-0 bg-gradient-to-tl from-purple to-white'>
             <div className='max-w-8xl m-auto'>
                 <EventHeader title='Upcoming Events' />
                 <div className=' grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 xl:gap-8'>
