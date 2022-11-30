@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract TicketsMarketplace is ReentrancyGuard, ERC1155Holder {
+contract EventsBazaar is ReentrancyGuard, ERC1155Holder {
     // Variables
     address payable public immutable feeAccount; // the account that receives fees
     uint256 public immutable feePercent; // the fee percentage on ticket sales
@@ -51,21 +51,21 @@ contract TicketsMarketplace is ReentrancyGuard, ERC1155Holder {
         address indexed buyer
     );
     event TicketRelisted(address from, uint256 indexed eventId);
-     event PurchaseRelist(address to, uint256 indexed eventId);
+    event PurchaseRelist(address to, uint256 indexed eventId);
 
     constructor(uint256 _feePercent) {
         feeAccount = payable(msg.sender);
         feePercent = _feePercent;
     }
 
-    // Make item to offer on the marketplace
+    // Register event to offer on the marketplace
     function registerEvent(
         IERC1155 _nft,
         uint256 _price,
         uint256 _tokenId
     ) external nonReentrant {
         require(_price > 0, "Price must be greater than zero");
-        // increment itemCount
+        // increment eventCount
         eventCount++;
 
         IERC1155 nft = IERC1155(_nft);
@@ -115,9 +115,10 @@ contract TicketsMarketplace is ReentrancyGuard, ERC1155Holder {
         if (eventItem.volume == 0) {
             eventItem.soldOut = true;
         }
-        
+
+        IERC1155 nft = IERC1155(eventItem.nft);
         // transfer nft ticket to buyer
-        eventItem.nft.safeTransferFrom(
+        nft.safeTransferFrom(
             address(this),
             msg.sender,
             eventItem.tokenId,
@@ -156,8 +157,9 @@ contract TicketsMarketplace is ReentrancyGuard, ERC1155Holder {
 
         relistedTicketCount++;
 
+        IERC1155 nft = IERC1155(events[_eventId].nft);
         // Tranfer from `sender` to markeplace
-        events[_eventId].nft.safeTransferFrom(
+        nft.safeTransferFrom(
             msg.sender,
             address(this),
             events[_eventId].tokenId,
@@ -192,8 +194,10 @@ contract TicketsMarketplace is ReentrancyGuard, ERC1155Holder {
 
         relistedTicket.sold = true;
 
+        IERC1155 nft = IERC1155(eventItem.nft);
+
         // transfer ticket nft to buyer
-        eventItem.nft.safeTransferFrom(
+        nft.safeTransferFrom(
             address(this),
             msg.sender,
             eventItem.tokenId,
@@ -212,18 +216,25 @@ contract TicketsMarketplace is ReentrancyGuard, ERC1155Holder {
         return events[_eventId].nft.balanceOf(addr, events[_eventId].tokenId);
     }
 
+    event GiftTicket(address from, address to, uint eventId);
+
     function giftMyTicket(address _receiver, uint256 _eventId) external {
         uint256 balance = getBalanceOfAddress(
             msg.sender,
             events[_eventId].tokenId
         );
         require(balance > 0, "You have no ticket for this event");
-        events[_eventId].nft.safeTransferFrom(
+
+        IERC1155 nft = IERC1155(events[_eventId].nft);
+
+        nft.safeTransferFrom(
             msg.sender,
             _receiver,
             events[_eventId].tokenId,
             1,
             ""
         );
+
+        emit GiftTicket(msg.sender, _receiver, _eventId);
     }
 }
