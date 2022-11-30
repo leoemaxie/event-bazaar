@@ -1,9 +1,9 @@
-const upcomingEvents = [
+export const upcomingEvents = [
     {
         id: 1,
         price: 3.3,
         date: 14,
-        category: 'metaverse',
+        category: 'game',
         free: 'true',
         month: 'APR',
         title: 'Wonder Girls 2010 Wonder Girls World Tour San Francisco',
@@ -25,7 +25,7 @@ const upcomingEvents = [
         id: 3,
         price: 3.3,
         date: 14,
-        category: 'nft',
+        category: 'game',
         free: 'false',
         month: 'APR',
         title: 'Wonder Girls 2010 Wonder Girls World Tour San Francisco',
@@ -67,4 +67,22 @@ const upcomingEvents = [
     },
 ]
 
-export default upcomingEvents
+
+export const categories = [
+    {
+        name: 'All',
+        value: 'all'
+    },
+    {
+        name: 'NFT',
+        value: 'nft'
+    },
+    {
+        name: 'Game',
+        value: 'game'
+    },
+    {
+        name: 'Metaverse',
+        value: 'metaverse'
+    },
+]

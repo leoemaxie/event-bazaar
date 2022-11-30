@@ -1,5 +1,6 @@
 import { useContext } from "react"
 import { FormContext } from "../contexts/FormContext"
+import { categories } from '../../event'
 
 const style = {
     input: `my-2 border-[1px] rounded-lg p-2 px-4 border-darkPurple`,

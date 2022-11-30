@@ -1,7 +1,7 @@
 import React from 'react'
 import EventCards from './EventCards'
 import EventHeader from './EventHeader'
-import upcomingEvents from '../../event'
+import { upcomingEvents } from '../../event'
 
 const UpcomingEvents = () => {
     return (
