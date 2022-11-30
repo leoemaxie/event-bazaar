@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import ether from '../assets/images/ethereum.png'
 import surf from '../assets/images/surf.jpg'
 
@@ -11,7 +12,11 @@ const EventCards = ({ event }) => {
                     <p>Price</p>
                     <div className='flex items-center font-semibold text-blue'><img src={ether} alt="Ethereum" /><span>{event.price} ETH</span></div>
                 </div>
-                <button className='bg-blue py-2 px-4 rounded-3xl font-semibold'>Attend</button>
+                <Link to='/details'>
+                    <button className='bg-blue py-2 px-4 rounded-3xl font-semibold'>
+                        Attend
+                    </button>
+                </Link>
             </div>
             {/* <div className='w-[344px] h-[156px] my-4 border-blue border-[1px]'> */}
             <img src={surf} alt="Event card" className='my-4' />

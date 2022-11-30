@@ -10,9 +10,9 @@ const Hero = () => {
                     <p className='my-8 max-w-lg text-lg'>Create events, gift or sell event ticket, and lots more. Discover and connect with more people all over the world.</p>
                     <img src={divider} alt="divider" className='-ml-16' />
                     <Link to='/createEvent'>
-                        <button className='bg-blue px-8 py-3 mt-8 rounded-3xl font-semibold hover:border-[1px] hover:border-blue hover:bg-transparent'>Create Event</button>
+                        <button className='bg-blue px-8 py-3 mt-8 rounded-3xl font-semibold hover:border-[1px] hover:border-blue hover:bg-transparent mr-6'>Create Event</button>
                     </Link>
-                    <button className='bg-transparent px-8 py-3 mt-8 rounded-3xl font-semibold border-blue border-[1px] hover:border-none hover:bg-darkPurple ml-6'>Gift Ticket</button>
+                    <button className='bg-transparent px-8 py-3 mt-8 rounded-3xl font-semibold border-blue border-[1px] hover:border-none hover:bg-darkPurple'>Gift Ticket</button>
                 </div>
                 <div className=''></div>
             </div>

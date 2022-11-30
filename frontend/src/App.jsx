@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import ReachUs from './components/ReachUs';
 import SellTicket from "./components/SellTicket";
 import CreateEvent from './pages/CreateEvent';
+import EventDetails from './pages/EventDetails';
 
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
             <Route path='/' element={<Home />} />
             <Route path='/eventplace' element={<Event />} />
             <Route path='/createEvent' element={<CreateEvent />} />
+            <Route path='/details' element={<EventDetails />} />
           </Routes>
         </>
         <SellTicket />
