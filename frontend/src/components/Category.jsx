@@ -1,5 +1,5 @@
 import CategorySlider from "./CategorySlider"
-import { EventContext } from "../contexts/eventContext"
+import { EventContext } from "../contexts/EventContext"
 import { useContext } from "react"
 import { categories } from '../../event'
 
