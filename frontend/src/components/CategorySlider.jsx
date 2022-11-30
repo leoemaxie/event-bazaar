@@ -1,7 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper";
 import EventCards from './EventCards'
-import { EventContext } from "../contexts/eventContext"
+import { EventContext } from "../contexts/EventContext"
 import { useContext, useEffect } from "react"
 import { upcomingEvents } from "../../event";
 

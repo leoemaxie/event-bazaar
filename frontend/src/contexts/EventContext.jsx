@@ -6,7 +6,7 @@ export const EventContext = createContext()
 const EventContextProvider = ({ children }) => {
 
     const [eventCategory, setEventCategory] = useState('all')
-    const [events, setEvents] = useState(null)
+    const [events, setEvents] = useState(upcomingEvents)
 
     const getAllCategory = () => {
         const allCategory = upcomingEvents
