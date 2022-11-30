@@ -2,11 +2,8 @@ const hre = require("hardhat");
 
 async function main() {
   
-  const feePercent = 5;
-  const uri = ""
-
   const EventsBazaar = await hre.ethers.getContractFactory("EventsBazaar");
-  const eventsBazaar = await EventsBazaar.deploy(feePercent);
+  const eventsBazaar = await EventsBazaar.deploy();
   await eventsBazaar.deployed();
 
   console.log(
@@ -14,7 +11,7 @@ async function main() {
   );
 
   const EventNFT = await hre.ethers.getContractFactory("EventNFT");
-  const eventNFT = await EventNFT.deploy(uri);
+  const eventNFT = await EventNFT.deploy();
   await eventNFT.deployed();
 
   console.log(

@@ -9,9 +9,8 @@ contract EventNFT is ERC1155 {
     address public owner;
     string public baseUri;
 
-    constructor(string memory _uri) ERC1155(_uri) {
+    constructor() ERC1155("") {
         owner = msg.sender;
-        baseUri = _uri;
     }
 
     event MintTickets(address sender, uint ticketId, uint _volume);
@@ -34,6 +33,12 @@ contract EventNFT is ERC1155 {
             string(
                 abi.encodePacked(baseUri, Strings.toString(_tokenId), ".json")
             );
+    }
+
+    function setURI(string memory newuri) public {
+        require(msg.sender == owner, "You're not the owner");
+        baseUri = newuri;
+        _setURI(newuri);
     }
 
     function safeTransferFrom(

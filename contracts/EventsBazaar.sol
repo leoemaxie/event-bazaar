@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 contract EventsBazaar is ReentrancyGuard, ERC1155Holder {
     // Variables
     address payable public immutable feeAccount; // the account that receives fees
-    uint256 public immutable feePercent; // the fee percentage on ticket sales
+    uint256 public feePercent; // the fee percentage on ticket sales
     uint256 public eventCount;
     uint256 public relistedTicketCount;
 
@@ -53,9 +53,13 @@ contract EventsBazaar is ReentrancyGuard, ERC1155Holder {
     event TicketRelisted(address from, uint256 indexed eventId);
     event PurchaseRelist(address to, uint256 indexed eventId);
 
-    constructor(uint256 _feePercent) {
+    constructor() {
         feeAccount = payable(msg.sender);
-        feePercent = _feePercent;
+    }
+
+    function setFeePercent(uint _fee) public {
+        require(msg.sender == feeAccount, "You're not the owner!");
+        feePercent = _fee;
     }
 
     // Register event to offer on the marketplace
