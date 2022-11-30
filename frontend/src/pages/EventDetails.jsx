@@ -3,7 +3,7 @@ import React from 'react'
 const EventDetails = () => {
     return (
         <div>
-            EventDetails
+            EventDetails goes here... In progress
         </div>
     )
 }
