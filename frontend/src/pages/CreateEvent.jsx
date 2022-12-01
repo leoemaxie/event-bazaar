@@ -1,6 +1,5 @@
 import { useContext } from "react"
 import { FormContext } from "../contexts/FormContext"
-import { categories } from '../../event'
 
 const style = {
     input: `my-2 border-[1px] rounded-lg p-2 px-4 border-darkPurple`,
@@ -73,7 +72,7 @@ const CreateEvent = () => {
                             </div>
                         </div>
                         <div className={style.labelContainer}>
-                            <label htmlFor="price" className={style.label}>Price (Ethers)*</label>
+                            <label htmlFor="price" className={style.label}>Price (USD)*</label>
                             <input
                                 type="number"
                                 id='price'
@@ -97,7 +96,7 @@ const CreateEvent = () => {
                             />
                         </div>
                         <div className={style.inputContainer}>
-                            <label htmlFor="time" className={style.label}>Date of Event*</label>
+                            <label htmlFor="time" className={style.label}>Time of Event*</label>
                             <input
                                 type="time"
                                 id='time'

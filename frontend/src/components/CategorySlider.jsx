@@ -3,7 +3,6 @@ import { Autoplay, Pagination, Navigation } from "swiper";
 import EventCards from './EventCards'
 import { EventContext } from "../contexts/EventContext"
 import { useContext, useEffect } from "react"
-import { upcomingEvents } from "../../event";
 
 // Import Swiper styles
 import 'swiper/css';

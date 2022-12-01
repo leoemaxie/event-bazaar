@@ -7,12 +7,15 @@ import ReachUs from './components/ReachUs';
 import SellTicket from "./components/SellTicket";
 import CreateEvent from './pages/CreateEvent';
 import EventDetails from './pages/EventDetails';
+import GiftTicket from './components/GiftTicket';
+import UserProfile from './pages/UserProfile';
 
 
 export default function App() {
   return (
     <div>
       <BrowserRouter>
+        <GiftTicket />
         <Navbar />
         <>
           <Routes>
@@ -20,6 +23,7 @@ export default function App() {
             <Route path='/eventplace' element={<Event />} />
             <Route path='/createEvent' element={<CreateEvent />} />
             <Route path='/details' element={<EventDetails />} />
+            <Route path='/userProfile' element={<UserProfile />} />
           </Routes>
         </>
         <SellTicket />

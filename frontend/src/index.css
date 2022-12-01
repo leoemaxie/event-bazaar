@@ -12,3 +12,11 @@
     background-color: #141414;
     clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 69% 100%, 0 100%);
 }
+
+.swiper-button-next {
+    right: 0px !important;
+}
+
+.swiper-button-prev {
+    left: 0px !important;
+}

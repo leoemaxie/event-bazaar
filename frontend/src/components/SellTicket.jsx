@@ -8,7 +8,7 @@ const SellTicket = () => {
                 <div className='flex-1'>
                     <p className='text-3xl font-semibold'>Not Attending Anymore?</p>
                     <span className='text-sm block pt-4'>Sell / Gift your ticket</span>
-                    <button className='bg-gradient-to-tr from-purple to-darkPurple px-8 py-3 mt-8 rounded-3xl font-semibold'>Create Event</button>
+                    <button className='bg-gradient-to-tr from-purple to-darkPurple px-8 py-3 mt-8 rounded-3xl font-semibold'>Sell Ticket</button>
                 </div>
             </div>
         </div>

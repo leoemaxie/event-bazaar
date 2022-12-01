@@ -26,9 +26,11 @@ const Navbar = () => {
                 </ul>
                 <div className='flex items-center'>
                     <button className='hidden md:block text-blue rounded-3xl border-blue border-[1px] px-5 py-2 mr-4'>Connect Wallet</button>
-                    <div className='w-11 h-11 bg-blue rounded-full flex justify-center items-center'>
-                        <img src={person} alt="person icon" />
-                    </div>
+                    <Link to='/userProfile'>
+                        <div className='w-11 h-11 bg-blue rounded-full flex justify-center items-center cursor-pointer'>
+                            <img src={person} alt="person icon" />
+                        </div>
+                    </Link>
                 </div>
             </div>
         </nav>

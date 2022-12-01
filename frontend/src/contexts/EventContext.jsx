@@ -8,6 +8,13 @@ const EventContextProvider = ({ children }) => {
     const [eventCategory, setEventCategory] = useState('all')
     const [events, setEvents] = useState(upcomingEvents)
 
+    const [getEventInfo, setGetEventInfo] = useState({})
+
+    const handleClick = (id) => {
+        const getEventdetails = getAllCategory().find(detail => detail.id === id);
+        setGetEventInfo(getEventdetails)
+    }
+
     const getAllCategory = () => {
         const allCategory = upcomingEvents
         return allCategory;
@@ -27,7 +34,7 @@ const EventContextProvider = ({ children }) => {
             : setEvents(getAllCategory());
     }
     return (
-        <EventContext.Provider value={{ events, eventCategory, setEvents, getAllCategory, handleCategory, filterByCategory }}>
+        <EventContext.Provider value={{ getEventInfo, setGetEventInfo, handleClick, events, eventCategory, setEvents, getAllCategory, handleCategory, filterByCategory }}>
             {children}
         </EventContext.Provider>
     )

@@ -15,6 +15,21 @@ const FormContextProvider = ({ children }) => {
         timeZone: '',
         ticketLink: ''
     })
+    const [giftTicket, setGiftTicket] = useState({
+        transferMode: '',
+        price: '',
+        address: '',
+        note: ''
+    })
+    const [openGiftTicket, setOpenGiftTicket] = useState(false)
+
+    const handleOpenGiftTicket = () => {
+        setOpenGiftTicket(true)
+    }
+    const handleCloseGiftTicket = () => {
+        setOpenGiftTicket(false)
+    }
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setCreateEvent({
@@ -23,10 +38,18 @@ const FormContextProvider = ({ children }) => {
         })
     }
 
+    const handleChangeGift = (e) => {
+        const { name, value } = e.target;
+        setGiftTicket({
+            ...giftTicket,
+            [name]: value
+        })
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log(createEvent)
-        setCreateEvent(({
+        setCreateEvent({
             price: '',
             date: '',
             time: '',
@@ -37,11 +60,32 @@ const FormContextProvider = ({ children }) => {
             hostOrg: '',
             timeZone: '',
             ticketLink: ''
-        }))
+        })
+    }
+
+    const handleSubmitGift = (e) => {
+        e.preventDefault()
+        console.log(giftTicket)
+        setGiftTicket({
+            transferMode: '',
+            price: '',
+            address: '',
+            note: '',
+        })
     }
 
     return (
-        <FormContext.Provider value={{ createEvent, handleChange, handleSubmit }}>
+        <FormContext.Provider value={{
+            createEvent,
+            handleChange,
+            handleSubmit,
+            giftTicket,
+            handleChangeGift,
+            handleSubmitGift,
+            handleCloseGiftTicket,
+            openGiftTicket,
+            handleOpenGiftTicket
+        }}>
             {children}
         </FormContext.Provider>
     )
