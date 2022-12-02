@@ -16,13 +16,13 @@ const Navbar = () => {
                     <img src={ticketLogo} alt="Ticket Marketplace Logo" className='w-4/5 md:w-full' />
                 </Link>
                 <ul className='hidden text-white lg:flex text-lg'>
-                    <li className={`${activeMenu === 'home' ? 'rounded-3xl bg-white text-blue font-semibold' : ''} px-4 mx-4 cursor-pointer`} onClick={() => handleActive('home')}>
+                    <li className={`${activeMenu === 'home' && 'rounded-3xl bg-white text-blue font-semibold'} px-4 mx-4 cursor-pointer`} onClick={() => handleActive('home')}>
                         <Link to='/'>Home</Link>
                     </li>
-                    <li className={`${activeMenu === 'event' ? 'rounded-3xl bg-white text-blue font-semibold' : ''} px-4 mx-4 cursor-pointer`} onClick={() => handleActive('event')}>
+                    <li className={`${activeMenu === 'event' && 'rounded-3xl bg-white text-blue font-semibold'} px-4 mx-4 cursor-pointer`} onClick={() => handleActive('event')}>
                         <Link to='/eventplace'>Event Place</Link>
                     </li>
-                    <li className={`${activeMenu === 'works' ? 'rounded-3xl bg-white text-blue font-semibold' : ''} px-4 mx-4 cursor-pointer`} onClick={() => handleActive('works')}>How it works</li>
+                    <li className={`${activeMenu === 'works' && 'rounded-3xl bg-white text-blue font-semibold'} px-4 mx-4 cursor-pointer`} onClick={() => handleActive('works')}><Link to='/createEvent'>Create Event</Link></li>
                 </ul>
                 <div className='flex items-center'>
                     <button className='hidden md:block text-blue rounded-3xl border-blue border-[1px] px-5 py-2 mr-4'>Connect Wallet</button>

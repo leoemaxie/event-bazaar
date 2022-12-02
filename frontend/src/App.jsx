@@ -3,8 +3,6 @@ import Navbar from "./components/Navbar";
 import Home from './pages/Home';
 import Event from './pages/Event';
 import Footer from "./components/Footer";
-import ReachUs from './components/ReachUs';
-import SellTicket from "./components/SellTicket";
 import CreateEvent from './pages/CreateEvent';
 import EventDetails from './pages/EventDetails';
 import GiftTicket from './components/GiftTicket';
@@ -26,8 +24,6 @@ export default function App() {
             <Route path='/userProfile' element={<UserProfile />} />
           </Routes>
         </>
-        <SellTicket />
-        <ReachUs />
         <Footer />
       </BrowserRouter>
     </div>

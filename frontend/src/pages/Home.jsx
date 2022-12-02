@@ -1,5 +1,7 @@
 import Category from "../components/Category";
 import Hero from "../components/Hero";
+import ReachUs from "../components/ReachUs";
+import SellTicket from "../components/SellTicket";
 import UpcomingEvents from "../components/UpcomingEvents";
 
 const Home = () => {
@@ -8,6 +10,8 @@ const Home = () => {
             <Hero />
             <Category />
             <UpcomingEvents />
+            <SellTicket />
+            <ReachUs />
         </div>
     )
 }

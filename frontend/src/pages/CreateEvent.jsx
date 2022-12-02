@@ -11,8 +11,8 @@ const style = {
 const CreateEvent = () => {
     const { createEvent, handleChange, handleSubmit } = useContext(FormContext)
     return (
-        <div className=' bg-gradient-to-br from-darkPurple to-purple p-8 md:px-12 lg:px-20 2xl:px-0'>
-            <div div className='bg-white rounded-3xl p-6 md:p-8 w-11/12 lg:w-3/4 m-auto max-w-6xl' >
+        <div className=' bg-gradient-to-br from-darkPurple to-purple p-4 md:px-12 lg:px-20 2xl:px-0'>
+            <div div className='bg-white rounded-3xl p-4 md:p-8 w-11/12 lg:w-3/4 m-auto max-w-6xl' >
                 <p className='text-2xl lg:text-4xl font-semibold mb-4'>Create Event</p>
                 <form action="" onSubmit={handleSubmit}>
                     <span className='text-blue text-sm font-semibold'>* Mandatory Information</span>
@@ -140,14 +140,12 @@ const CreateEvent = () => {
                         </div>
                     </div>
                     <div className={style.inputContainer}>
-                        <label htmlFor="ticketLink" className={style.label}>Link to Event Ticket NFT*</label>
+                        <label htmlFor="ticketLink" className={style.label}>Select Event Ticket Image*</label>
                         <input
-                            type="text"
-                            id='ticketLink'
-                            name='ticketLink'
-                            placeholder='http://...'
-                            className={style.input}
-                            value={createEvent.ticketLink}
+                            type="file"
+                            id='ticketImg'
+                            name='ticketImg'
+                            value={createEvent.ticketImg}
                             onChange={handleChange}
                         />
                     </div>

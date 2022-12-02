@@ -13,7 +13,7 @@ const FormContextProvider = ({ children }) => {
         details: '',
         hostOrg: '',
         timeZone: '',
-        ticketLink: ''
+        ticketImg: ''
     })
     const [giftTicket, setGiftTicket] = useState({
         transferMode: '',
@@ -59,7 +59,7 @@ const FormContextProvider = ({ children }) => {
             details: '',
             hostOrg: '',
             timeZone: '',
-            ticketLink: ''
+            ticketImg: ''
         })
     }
 

@@ -13,11 +13,11 @@ const GiftTicket = () => {
     const { openGiftTicket, handleCloseGiftTicket, giftTicket, handleChangeGift, handleSubmitGift } = useContext(FormContext)
 
     return (
-        <div className={`${openGiftTicket ? 'block' : 'hidden'}  w-full h-full flex items-center justify-center z-50 fixed left-0`}>
-            <div className='bg-white rounded-3xl p-6 md:p-8'>
+        <div className={`${openGiftTicket ? 'block' : 'hidden'}  w-full h-full flex items-center justify-center z-50 fixed left-0 bg-blackShade/[.6]`}>
+            <div className='bg-white rounded-3xl p-6 md:p-8 mx-8 md:mx-0'>
                 <div className="flex justify-between items-center mb-4">
-                    <p className='text-xl lg:text-2xl font-semibold'>Not attending an event anymore?</p>
-                    <div className="bg-blue p-2 rounded flex justify-center ml-16 cursor-pointer" onClick={handleCloseGiftTicket}>
+                    <p className='text-lg md:text-2xl font-semibold'>Not attending an event anymore?</p>
+                    <div className="bg-blue p-2 rounded flex justify-center ml-8 md:ml-16 cursor-pointer" onClick={handleCloseGiftTicket}>
                         <img src={close} alt="close icon" className="w-1/2" />
                     </div>
                 </div>
