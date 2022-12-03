@@ -9,16 +9,19 @@ contract EventNFT is ERC1155 {
     address public owner;
     string public baseUri;
 
-    constructor(string memory _uri) ERC1155(_uri) {
+    constructor() ERC1155("https://events-bazaar.infura-ipfs.io/ipfs/{id}") {
         owner = msg.sender;
-        baseUri = _uri;
     }
+
+    mapping(uint => string) public ticketUri;
 
     event MintTickets(address sender, uint ticketId, uint _volume);
 
-    function mintTickets(uint _volume) external {
+    function mintTickets(uint _volume, string memory cid) external {
         TICKET++;
         _mint(msg.sender, TICKET, _volume, "");
+
+        ticketUri[TICKET] = cid;
 
         emit MintTickets(msg.sender, TICKET, _volume);
     }
@@ -30,10 +33,17 @@ contract EventNFT is ERC1155 {
         returns (string memory)
     {
         require(_tokenId > 0 && _tokenId <= TICKET, "Token ID does not exist");
+        string memory url = ticketUri[_tokenId];
         return
             string(
-                abi.encodePacked(baseUri, Strings.toString(_tokenId), ".json")
+                abi.encodePacked(baseUri, url)
             );
+    }
+
+    function setURI(string memory newuri) public {
+        require(msg.sender == owner, "You're not the owner");
+        baseUri = newuri;
+        _setURI(newuri);
     }
 
     function safeTransferFrom(
