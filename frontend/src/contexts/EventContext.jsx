@@ -23,7 +23,7 @@ const EventContextProvider = ({ children }) => {
     setSearch(e.target.value);
   };
   // filtering based on searched event
-  const filteringEvent = events.filter((event) =>
+  const filteringEvent = events?.filter((event) =>
     event.metadata.title.toLowerCase().includes(search.toLowerCase())
   );
 

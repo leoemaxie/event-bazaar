@@ -39,7 +39,7 @@ const CategorySlider = () => {
                 },
             }}
         >
-            {events.map(event => (
+            {events?.map(event => (
                 <SwiperSlide key={event.tokenId}>
                     <EventCards event={event} />
                 </SwiperSlide>

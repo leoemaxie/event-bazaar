@@ -14,7 +14,7 @@ const UpcomingEvents = () => {
             <div className='max-w-8xl m-auto'>
                 <EventHeader title='Upcoming Events' showSearch='false' />
                 <div className=' grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 xl:gap-8'>
-                    {events.map(event => (
+                    {events?.map(event => (
                         <EventCards event={event} key={event.tokenId} />
                     ))}
                 </div>

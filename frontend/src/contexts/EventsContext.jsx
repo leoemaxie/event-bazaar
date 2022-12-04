@@ -67,37 +67,37 @@ const EventsProvider = ({ children }) => {
 
   //Get all the Events Registered for sell of Tickets
   const getAllEvents = async () => {
-    const bazaarContract = createEventBazaarContract(
-      EventBazaarContract,
-      provider,
-      eventsBazaarabi
-    );
-    const eventContract = createEventNFTContract(
-      EventNFTContract,
-      provider,
-      eventNFTabi
-    );
-    const eventsCount = await bazaarContract.eventCount();
-    let events = [];
-    if (eventsCount == 0) return;
-    for (let i = 1; i <= eventsCount; i++) {
-      let event = await bazaarContract.events(i);
-      let formatedData = {
-        tokenId: ethers.utils.formatUnits(event.tokenId, 'wei'),
-        volume: ethers.utils.formatUnits(event.volume, 'wei'),
-        price: ethers.utils.formatEther(event.price),
-        soldOut: event.soldOut
-      };
-      let ticketUri = await eventContract.ticketUri(event.tokenId);
-      let result = await fetch(
-        `https://events-bazaar.infura-ipfs.io/ipfs/${ticketUri}`
+      const bazaarContract = createEventBazaarContract(
+        EventBazaarContract,
+        provider,
+        eventsBazaarabi
       );
-      let data = await result.json();
-
-      events.push({ ...formatedData, metadata: data });
-    }
-    setAllEvents(events);
-    return events;
+      const eventContract = createEventNFTContract(
+        EventNFTContract,
+        provider,
+        eventNFTabi
+      );
+      const eventsCount = await bazaarContract.eventCount();
+      let events = [];
+      if (eventsCount == 0) return;
+      for (let i = 1; i <= eventsCount; i++) {
+        let event = await bazaarContract.events(i);
+        let formatedData = {
+          tokenId: ethers.utils.formatUnits(event.tokenId, 'wei'),
+          volume: ethers.utils.formatUnits(event.volume, 'wei'),
+          price: ethers.utils.formatEther(event.price),
+          soldOut: event.soldOut
+        };
+        let ticketUri = await eventContract.ticketUri(event.tokenId);
+        let result = await fetch(
+          `https://events-bazaar.infura-ipfs.io/ipfs/${ticketUri}`
+        );
+        let data = await result.json();
+  
+        events.push({ ...formatedData, metadata: data });
+      }
+      setAllEvents(events);
+      return events; 
   };
 
   //Get relisted Tickets of an event

@@ -40,7 +40,7 @@ const CreateEvent = () => {
       const imgUrl = reader.result;
       setCreateEvent({
         ...createEvent,
-        [e.target.name]: imgUrl,
+        image: imgUrl,
       });
     };
     if (file) {
@@ -216,7 +216,7 @@ const CreateEvent = () => {
               type="file"
               id="image"
               name="image"
-              value={createEvent.image}
+              //value={createEvent.image}
               onChange={handleImageInput}
               required
             />
