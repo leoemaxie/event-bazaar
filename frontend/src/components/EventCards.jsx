@@ -49,12 +49,12 @@ const EventCards = ({ event }) => {
           <p className="font-semibold mb-2">
             {event.metadata.title.length > 30
               ? event.metadata.title.slice(0, 40) + " ..."
-              : event.title}
+              : event.metadata.title}
           </p>
           <span className="text-sm">
             {event.metadata.description.length > 30
               ? event.metadata.description.slice(0, 80) + " ..."
-              : event.details}
+              : event.metadata.description}
           </span>
         </div>
       </div>

@@ -7,8 +7,8 @@ import { create } from "ipfs-http-client";
 import { Buffer } from "buffer";
 
 const { ethereum } = window;
-const EventBazaarContract = "0xeB9b66d860fdC4fD100a30DD287E85872844715a";
-const EventNFTContract = "0x5063c428C1Fc562Abe0ff124bB6d6091b6692889";
+const EventBazaarContract = "0x7D0A3eAef568AD115E209c52bb10b2DFa8f20e2B";
+const EventNFTContract = "0x5F2E677C8bdDd62cC57761172091832348A32080";
 const eventsBazaarabi = EventBazaarABI.abi;
 const eventNFTabi = EventNFTABI.abi;
 const auth =

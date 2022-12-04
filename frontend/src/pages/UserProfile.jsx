@@ -65,7 +65,7 @@ const UserProfile = () => {
         </div>
         <div className="lg:flex">
           <div className="flex-1 lg:mr-8">
-            <EventHeader title="Events" showSearch="true" />
+            <EventHeader title="My Tickets" showSearch="true" />
             <EventTable tickets={myTickets} />
           </div>
           <div className="bg-whiteShade py-8 px-4 rounded-2xl flex-0 h-fit">
@@ -78,7 +78,7 @@ const UserProfile = () => {
                 >
                   <img
                     src={event.metadata.image}
-                    alt="Event Ticket image"
+                    alt="Event"
                     className="mr-4 w-[50px] h-[50px] rounded-full object-cover"
                   />
                   <div className="flex flex-col mr-4">

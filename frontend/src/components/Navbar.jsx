@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import ticketLogo from "../assets/images/nftTicketLogo.png";
+import ticketLogo from "../assets/images/EventBazaar.png";
 import person from "../assets/images/person.png";
 import { useContext } from "react";
 import { NavContext } from "../contexts/NavContext";
