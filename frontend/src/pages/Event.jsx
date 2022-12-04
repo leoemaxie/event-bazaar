@@ -16,7 +16,7 @@ const Event = () => {
                 <EventHeader title='Events' showSearch='true' />
                 <div className=' grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 xl:gap-8'>
                     {filteringEvent.map(event => (
-                        <EventCards event={event} key={event.id} />
+                        <EventCards event={event} key={event.tokenId} />
                     ))}
                 </div>
                 <div className='flex justify-center mt-8'>

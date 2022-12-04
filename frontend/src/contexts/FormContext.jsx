@@ -1,106 +1,59 @@
 import { createContext, useContext, useState } from "react";
 import { EventsContext } from "./EventsContext";
 
-export const FormContext = createContext()
+export const FormContext = createContext();
 
 const FormContextProvider = ({ children }) => {
-    const { registerEvent } = useContext(EventsContext);
+  const { giftMyTicket } = useContext(EventsContext);  
+  const [selectedEventId, setSelectedEventId] = useState(null);
+  const [giftTicket, setGiftTicket] = useState({
+    address: "",
+  });
+  const [openGiftTicket, setOpenGiftTicket] = useState(false);
 
-    const [createEvent, setCreateEvent] = useState({
-        price: '',
-        date: '',
-        time: '',
-        category: '',
-        title: '',
-        description: '',
-        hostOrg: '',
-        timeZone: '',
-        image: '',
-        volume: 0
-    })
-    const [giftTicket, setGiftTicket] = useState({
-        transferMode: '',
-        price: '',
-        address: '',
-        note: ''
-    })
-    const [openGiftTicket, setOpenGiftTicket] = useState(false)
-    const [isLoading, setIsLoading] = useState(false);
+  const handleOpenGiftTicket = (id) => {
+    setOpenGiftTicket(true);
+    setSelectedEventId(id);
+  };
+  const handleCloseGiftTicket = () => {
+    setOpenGiftTicket(false);
+    setSelectedEventId(null);
+  };
 
-    const handleOpenGiftTicket = () => {
-        setOpenGiftTicket(true)
+  const handleChangeGift = (e) => {
+    const { name, value } = e.target;
+    setGiftTicket({
+      ...giftTicket,
+      [name]: value,
+    });
+  };
+
+  const handleSubmitGift = (e) => {
+    e.preventDefault();
+    if (selectedEventId) {
+        giftMyTicket(giftTicket.address, selectedEventId);
     }
-    const handleCloseGiftTicket = () => {
-        setOpenGiftTicket(false)
-    }
+    setGiftTicket({
+      address: ""
+    });
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setCreateEvent({
-            ...createEvent,
-            [name]: value
-        })
-    }
+  };
 
-    const handleChangeGift = (e) => {
-        const { name, value } = e.target;
-        setGiftTicket({
-            ...giftTicket,
-            [name]: value
-        })
-    }
+  return (
+    <FormContext.Provider
+      value={{
+        selectedEventId,
+        giftTicket,
+        handleChangeGift,
+        handleSubmitGift,
+        handleCloseGiftTicket,
+        openGiftTicket,
+        handleOpenGiftTicket,
+      }}
+    >
+      {children}
+    </FormContext.Provider>
+  );
+};
 
-    const handleSubmitEvent = async (e) => {
-        e.preventDefault()
-        
-        try {
-            setIsLoading(true);
-            await registerEvent(createEvent);
-            setIsLoading(false)
-            setCreateEvent({
-                price: '',
-                date: '',
-                time: '',
-                category: '',
-                title: '',
-                description: '',
-                hostOrg: '',
-                timeZone: '',
-                image: '',
-                volume: 0
-            })   
-        } catch (error) {
-            setIsLoading(false)
-        }
-    }
-
-    const handleSubmitGift = (e) => {
-        e.preventDefault()
-        console.log(giftTicket)
-        setGiftTicket({
-            transferMode: '',
-            price: '',
-            address: '',
-            note: '',
-        })
-    }
-
-    return (
-        <FormContext.Provider value={{
-            createEvent,
-            handleChange,
-            handleSubmitEvent,
-            giftTicket,
-            handleChangeGift,
-            handleSubmitGift,
-            handleCloseGiftTicket,
-            openGiftTicket,
-            handleOpenGiftTicket,
-            isLoading
-        }}>
-            {children}
-        </FormContext.Provider>
-    )
-}
-
-export default FormContextProvider
+export default FormContextProvider;

@@ -8,7 +8,6 @@ import EventDetails from './pages/EventDetails';
 import GiftTicket from './components/GiftTicket';
 import UserProfile from './pages/UserProfile';
 
-
 export default function App() {
   return (
     <div>
@@ -18,9 +17,9 @@ export default function App() {
         <>
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/eventplace' element={<Event />} />
+            <Route path='/events' element={<Event />} />
             <Route path='/createEvent' element={<CreateEvent />} />
-            <Route path='/details' element={<EventDetails />} />
+            <Route path='/event-details/:id' element={<EventDetails />} />
             <Route path='/userProfile' element={<UserProfile />} />
           </Routes>
         </>

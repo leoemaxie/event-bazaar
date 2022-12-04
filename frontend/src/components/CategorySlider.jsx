@@ -11,12 +11,7 @@ import 'swiper/css/pagination';
 
 const CategorySlider = () => {
 
-
-    const { events, setEvents, getAllCategory } = useContext(EventContext)
-
-    useEffect(() => {
-        setEvents(getAllCategory())
-    }, [])
+    const { events } = useContext(EventContext)
 
     return (
         <Swiper
@@ -45,7 +40,7 @@ const CategorySlider = () => {
             }}
         >
             {events.map(event => (
-                <SwiperSlide key={event.id}>
+                <SwiperSlide key={event.tokenId}>
                     <EventCards event={event} />
                 </SwiperSlide>
             ))}

@@ -1,86 +1,59 @@
-import { createContext, useState, useMemo, useContext } from "react";
-import { upcomingEvents } from '../../event'
+import { createContext, useState, useMemo, useContext, useEffect } from "react";
 import { EventsContext } from "./EventsContext";
 
-export const EventContext = createContext()
+export const EventContext = createContext();
 
 const EventContextProvider = ({ children }) => {
-    const { getAllEvents } = useContext(EventsContext);
+  const { getAllEvents, walletAddress } = useContext(EventsContext);
 
-    const [eventCategory, setEventCategory] = useState('all')
-    const [events, setEvents] = useState([])
-    const [getEventInfo, setGetEventInfo] = useState({})
-    const [search, setSearch] = useState('')
-    const [mode, setMode] = useState('')
+  const [events, setEvents] = useState([]);
+  const [getEventInfo, setGetEventInfo] = useState({});
+  const [search, setSearch] = useState("");
 
-    // function to implement search
-    const handleSearch = (e) => {
-        setSearch(e.target.value)
-    }
-    // filtering based on searched event
-    const filteringEvent = events.filter(event => event.title.toLowerCase().includes(search.toLowerCase()))
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const allEvents = await getAllEvents();
+      setEvents(allEvents);
+    };
+    fetchEvents();
+  }, [walletAddress]);
 
-    function handleCategoryChange(e) {
-        // setSelectedCategory(e.target.value);
-        setMode(e.target.value);
-    }
+  // function to implement search
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
+  // filtering based on searched event
+  const filteringEvent = events.filter((event) =>
+    event.metadata.title.toLowerCase().includes(search.toLowerCase())
+  );
 
-    // Function to get filtered list
-    function getFilteredList() {
-        // Avoid filter when selectedCategory is null
-        if (!mode) {
-            return events;
-        }
-        return events.filter((item) => item.mode === mode);
-    }
+  function handleCategoryChange(e) {
+    // setSelectedCategory(e.target.value);
+    setMode(e.target.value);
+  }
 
-    // Avoid duplicate function calls with useMemo
-    let filteredList = useMemo(getFilteredList, [mode, events]);
+  // function get the id of event clicked to display it data
+  const handleClick = (id) => {
+    const getEventdetails = events.find((detail) => detail.tokenId == id);
+    setGetEventInfo(getEventdetails);
+  };
 
-    // function get the id of event clicked to display it data
-    const handleClick = (id) => {
-        const getEventdetails = getAllCategory().find(detail => detail.id === id);
-        setGetEventInfo(getEventdetails)
-    }
+  return (
+    <EventContext.Provider
+      value={{
+        getEventInfo,
+        setGetEventInfo,
+        handleClick,
+        events,
+        setEvents,
+        search,
+        handleSearch,
+        filteringEvent,
+      }}
+    >
+      {children}
+    </EventContext.Provider>
+  );
+};
 
-    // function to show all data
-    const getAllCategory = async () => {
-        const allCategory = await getAllEvents()
-        return allCategory;
-    }
-
-    const filterByCategory = (category) => {
-        let filtredPokemon = getAllCategory().filter(cate => cate.category === category);
-        return filtredPokemon;
-    }
-
-    function handleCategory(e) {
-        let eventCat = e.target.value;
-        setEventCategory(eventCat)
-
-        eventCat !== "all"
-            ? setEvents(filterByCategory(eventCat))
-            : setEvents(getAllCategory());
-    }
-    return (
-        <EventContext.Provider value={{
-            getEventInfo,
-            setGetEventInfo,
-            handleClick,
-            events,
-            eventCategory, setEvents,
-            getAllCategory,
-            handleCategory,
-            filterByCategory,
-            search,
-            handleSearch,
-            filteringEvent,
-            filteredList,
-            handleCategoryChange
-        }}>
-            {children}
-        </EventContext.Provider>
-    )
-}
-
-export default EventContextProvider
+export default EventContextProvider;

@@ -18,9 +18,7 @@ const auth =
       ":" +
       `${import.meta.env.VITE_PROJECT_SECRET}`
   ).toString("base64");
-const provider = new ethers.providers.Web3Provider(
-  window.ethereum
-);
+const provider = new ethers.providers.Web3Provider(window.ethereum);
 
 const IPFS = create({
   host: "ipfs.infura.io",
@@ -55,7 +53,7 @@ const EventsProvider = ({ children }) => {
       try {
         if (!ethereum) return alert("Please install MetaMask.");
         const accounts = await ethereum.request({ method: "eth_accounts" });
-        if (accounts.length) {
+        if (accounts?.length > 0) {
           setWalletAddress(accounts[0]);
         } else {
           console.log("No accounts found");
@@ -84,13 +82,19 @@ const EventsProvider = ({ children }) => {
     if (eventsCount == 0) return;
     for (let i = 1; i <= eventsCount; i++) {
       let event = await bazaarContract.events(i);
+      let formatedData = {
+        tokenId: ethers.utils.formatUnits(event.tokenId, 'wei'),
+        volume: ethers.utils.formatUnits(event.volume, 'wei'),
+        price: ethers.utils.formatEther(event.price),
+        soldOut: event.soldOut
+      };
       let ticketUri = await eventContract.ticketUri(event.tokenId);
       let result = await fetch(
         `https://events-bazaar.infura-ipfs.io/ipfs/${ticketUri}`
       );
       let data = await result.json();
 
-      events.push({ ...event, metadata: data });
+      events.push({ ...formatedData, metadata: data });
     }
     setAllEvents(events);
     return events;
@@ -116,6 +120,40 @@ const EventsProvider = ({ children }) => {
     }
 
     return relistedTickets;
+  };
+
+  //Get my purchased tickets
+  const getMyPurchasedTickets = async (addr) => {
+    const bazaarContract = createEventBazaarContract(
+      EventBazaarContract,
+      provider,
+      eventsBazaarabi
+    );
+    const eventContract = createEventNFTContract(
+      EventNFTContract,
+      provider,
+      eventNFTabi
+    );
+
+    const eventsCount = await bazaarContract.eventCount();
+    let events = [];
+    if (eventsCount == 0) return;
+
+    for (let i = 1; i <= eventsCount; i++) {
+      const bal = await bazaarContract.getBalanceOfAddress(addr, i);
+      const formatedBalance = ethers.utils.formatUnits(bal, 'wei');
+
+      if (formatedBalance > 0) {
+        let ticketUri = await eventContract.ticketUri(i);
+        let result = await fetch(
+          `https://events-bazaar.infura-ipfs.io/ipfs/${ticketUri}`
+        );
+        let data = await result.json();
+
+        events.push({ ...data, eventId: i });
+      }
+    }
+    return events;
   };
 
   //Register a new event
@@ -184,7 +222,8 @@ const EventsProvider = ({ children }) => {
     );
 
     const totalPrice = await bazaarContract.getTotalPrice(eventId);
-    await bazaarContract.purchaseTicket(eventId, { value: totalPrice }).wait();
+    const tx = await bazaarContract.purchaseTicket(eventId, { value: totalPrice });
+    await tx.wait()
   };
 
   //Buy Relisted Ticket of an event
@@ -203,35 +242,35 @@ const EventsProvider = ({ children }) => {
   };
 
   const giftMyTicket = async (addr, eventId) => {
-    const bazaarContract = await createEventBazaarContract(
+    const bazaarContract = createEventBazaarContract(
       EventBazaarContract,
       provider,
       eventsBazaarabi
     );
-    const eventContract = await createEventNFTContract(
+    const eventContract = createEventNFTContract(
       EventNFTContract,
       provider,
       eventNFTabi
     );
 
-    await eventContract.setApprovalForAll(EventBazaarContract, true).wait();
-    await bazaarContract.giftMyTicket(addr, eventId).wait();
+    await (await eventContract.setApprovalForAll(EventBazaarContract, true)).wait();
+    await (await bazaarContract.giftMyTicket(addr, eventId)).wait();
   };
 
-  const relistMyTicket = async () => {
-    const bazaarContract = await createEventBazaarContract(
+  const relistMyTicket = async (eventId) => {
+    const bazaarContract = createEventBazaarContract(
       EventBazaarContract,
       provider,
       eventsBazaarabi
     );
-    const eventContract = await createEventNFTContract(
+    const eventContract = createEventNFTContract(
       EventNFTContract,
       provider,
       eventNFTabi
     );
 
-    await eventContract.setApprovalForAll(EventBazaarContract, true).wait();
-    await bazaarContract.listMyPurchasedTicket(eventId).wait();
+    await (await eventContract.setApprovalForAll(EventBazaarContract, true)).wait();
+    await ( await bazaarContract.listMyPurchasedTicket(eventId)).wait();
   };
 
   return (
@@ -247,6 +286,7 @@ const EventsProvider = ({ children }) => {
         giftMyTicket,
         getRelistedTicketsOfEvent,
         buyTicket,
+        getMyPurchasedTickets
       }}
     >
       {children}
