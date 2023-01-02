@@ -4,17 +4,20 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
-contract EventsBazaar is ReentrancyGuard, ERC1155Holder {
+contract EventsBazaar is ReentrancyGuard, ERC1155, ERC1155Holder {
     // Variables
     address payable public immutable feeAccount; // the account that receives fees
     uint256 public immutable feePercent; // the fee percentage on ticket sales
     uint256 public eventCount;
     uint256 public relistedTicketCount;
+    uint256 public TICKET;
+    string public baseUri;
 
     struct EventTicket {
         uint256 eventId;
-        IERC1155 nft;
         uint256 tokenId;
         uint256 price;
         address payable seller;
@@ -35,16 +38,13 @@ contract EventsBazaar is ReentrancyGuard, ERC1155Holder {
 
     //listId -> Ticket
     mapping(uint256 => RelistedTicket) public relistedTickets;
+    mapping(uint256 => string) public ticketUri;
 
-    event RegisterEvent(
-        uint256 itemId,
-        address indexed nft,
-        uint256 price,
-        address indexed seller
-    );
+    event MintTickets(address sender, uint256 ticketId, uint256 _volume);
+
+    event RegisterEvent(uint256 itemId, uint256 price, address indexed seller);
     event PurchasedTicket(
         uint256 itemId,
-        address indexed nft,
         uint256 tokenId,
         uint256 price,
         address indexed seller,
@@ -53,40 +53,53 @@ contract EventsBazaar is ReentrancyGuard, ERC1155Holder {
     event TicketRelisted(address from, uint256 indexed eventId);
     event PurchaseRelist(address to, uint256 indexed eventId);
 
-    constructor(uint256 _feePercent) {
+    // https://events-bazaar.infura-ipfs.io/ipfs/{id}
+    constructor(uint256 _feePercent, string memory _baseUrl) ERC1155(_baseUrl) {
         feeAccount = payable(msg.sender);
         feePercent = _feePercent;
+        baseUri = _baseUrl;
+    }
+
+    function uri(uint256 _tokenId)
+        public
+        view
+        override
+        returns (string memory)
+    {
+        require(_tokenId > 0 && _tokenId <= TICKET, "Token ID does not exist");
+        string memory url = ticketUri[_tokenId];
+        return string(abi.encodePacked(baseUri, url));
     }
 
     // Register event to offer on the marketplace
     function registerEvent(
-        IERC1155 _nft,
         uint256 _price,
-        uint256 _tokenId
+        string memory cid,
+        uint256 _volume
     ) external nonReentrant {
         require(_price > 0, "Price must be greater than zero");
         // increment eventCount
         eventCount++;
+        TICKET++;
+        _mint(msg.sender, TICKET, _volume, "");
 
-        IERC1155 nft = IERC1155(_nft);
-        uint256 amount = nft.balanceOf(msg.sender, _tokenId);
+        ticketUri[TICKET] = cid;
 
         //transfer
-        nft.safeTransferFrom(msg.sender, address(this), _tokenId, amount, "");
+        safeTransferFrom(msg.sender, address(this), TICKET, _volume, "");
 
         // add new item to items mapping
         events[eventCount] = EventTicket(
             eventCount,
-            _nft,
-            _tokenId,
+            TICKET,
             _price,
             payable(msg.sender),
-            amount,
+            _volume,
             false
         );
 
         // emit RegisterEvent event
-        emit RegisterEvent(eventCount, address(_nft), _price, msg.sender);
+        emit RegisterEvent(eventCount, _price, msg.sender);
     }
 
     function purchaseTicket(uint256 _eventId) external payable nonReentrant {
@@ -116,20 +129,12 @@ contract EventsBazaar is ReentrancyGuard, ERC1155Holder {
             eventItem.soldOut = true;
         }
 
-        IERC1155 nft = IERC1155(eventItem.nft);
         // transfer nft ticket to buyer
-        nft.safeTransferFrom(
-            address(this),
-            msg.sender,
-            eventItem.tokenId,
-            1,
-            ""
-        );
+        _safeTransferFrom(address(this), msg.sender, eventItem.tokenId, 1, "");
 
         // emit PurchasedTicket event
         emit PurchasedTicket(
             _eventId,
-            address(eventItem.nft),
             eventItem.tokenId,
             eventItem.price,
             eventItem.seller,
@@ -157,9 +162,8 @@ contract EventsBazaar is ReentrancyGuard, ERC1155Holder {
 
         relistedTicketCount++;
 
-        IERC1155 nft = IERC1155(events[_eventId].nft);
         // Tranfer from `sender` to markeplace
-        nft.safeTransferFrom(
+        safeTransferFrom(
             msg.sender,
             address(this),
             events[_eventId].tokenId,
@@ -194,16 +198,8 @@ contract EventsBazaar is ReentrancyGuard, ERC1155Holder {
 
         relistedTicket.sold = true;
 
-        IERC1155 nft = IERC1155(eventItem.nft);
-
         // transfer ticket nft to buyer
-        nft.safeTransferFrom(
-            address(this),
-            msg.sender,
-            eventItem.tokenId,
-            1,
-            ""
-        );
+        _safeTransferFrom(address(this), msg.sender, eventItem.tokenId, 1, "");
 
         emit PurchaseRelist(msg.sender, relistedTicket.eventId);
     }
@@ -213,10 +209,10 @@ contract EventsBazaar is ReentrancyGuard, ERC1155Holder {
         view
         returns (uint256)
     {
-        return events[_eventId].nft.balanceOf(addr, events[_eventId].tokenId);
+        return balanceOf(addr, events[_eventId].tokenId);
     }
 
-    event GiftTicket(address from, address to, uint eventId);
+    event GiftTicket(address from, address to, uint256 eventId);
 
     function giftMyTicket(address _receiver, uint256 _eventId) external {
         uint256 balance = getBalanceOfAddress(
@@ -225,9 +221,7 @@ contract EventsBazaar is ReentrancyGuard, ERC1155Holder {
         );
         require(balance > 0, "You have no ticket for this event");
 
-        IERC1155 nft = IERC1155(events[_eventId].nft);
-
-        nft.safeTransferFrom(
+        _safeTransferFrom(
             msg.sender,
             _receiver,
             events[_eventId].tokenId,
@@ -236,5 +230,15 @@ contract EventsBazaar is ReentrancyGuard, ERC1155Holder {
         );
 
         emit GiftTicket(msg.sender, _receiver, _eventId);
+    }
+
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        virtual
+        override(ERC1155, ERC1155Receiver)
+        returns (bool)
+    {
+        return super.supportsInterface(interfaceId);
     }
 }

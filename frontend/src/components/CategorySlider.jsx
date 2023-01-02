@@ -1,7 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper";
 import EventCards from './EventCards'
-import { EventContext } from "../contexts/EventContext"
+import { EventsContext } from "../contexts/EventsContext"
 import { useContext, useEffect } from "react"
 
 // Import Swiper styles
@@ -11,7 +11,7 @@ import 'swiper/css/pagination';
 
 const CategorySlider = () => {
 
-    const { events } = useContext(EventContext)
+    const { events } = useContext(EventsContext)
 
     return (
         <Swiper

@@ -1,8 +1,8 @@
 import { useContext } from "react"
-import { EventContext } from "../contexts/EventContext"
+import { EventsContext } from "../contexts/EventsContext"
 
 const EventHeader = ({ title, showSearch }) => {
-    const { handleSearch, handleCategoryChange } = useContext(EventContext)
+    const { handleSearch, handleCategoryChange } = useContext(EventsContext)
 
     return (
         <div className='flex items-center justify-between mb-10 text-textPurple font-semibold'>

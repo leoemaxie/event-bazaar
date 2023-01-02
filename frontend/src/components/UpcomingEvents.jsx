@@ -2,12 +2,11 @@ import { useEffect } from 'react'
 import EventCards from './EventCards'
 import EventHeader from './EventHeader'
 import { useContext } from "react"
-import { EventContext } from "../contexts/EventContext"
 import { EventsContext } from '../contexts/EventsContext'
 
 const UpcomingEvents = () => {
-    const { getAllEvents } = useContext(EventsContext);
-    const { events } = useContext(EventContext);
+    
+    const { getAllEvents, events } = useContext(EventsContext);
 
     return (
         <div className='px-8 md:px-12 lg:px-20 py-8 2xl:px-0 bg-gradient-to-tl from-darkPurple to-white'>

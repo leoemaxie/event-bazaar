@@ -4,11 +4,11 @@ import EventHeader from '../components/EventHeader'
 import ReachUs from '../components/ReachUs';
 import SellTicket from "../components/SellTicket";
 import { useContext, useState } from "react"
-import { EventContext } from "../contexts/EventContext"
+import { EventsContext } from "../contexts/EventsContext"
 
 
 const Event = () => {
-    const { filteringEvent } = useContext(EventContext)
+    const { filteringEvent } = useContext(EventsContext)
 
     return (
         <>

@@ -1,7 +1,6 @@
 import EventHeader from "../components/EventHeader";
 import EventTable from "../components/EventTable";
 import { useContext, useEffect } from "react";
-import { EventContext } from "../contexts/EventContext";
 import { FormContext } from "../contexts/FormContext";
 import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
 import { EventsContext } from "../contexts/EventsContext";
@@ -12,8 +11,7 @@ import { ethers } from 'ethers';
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 
 const UserProfile = () => {
-  const { events, filteringEvent } = useContext(EventContext);
-  const { walletAddress, getMyPurchasedTickets } = useContext(EventsContext);
+  const { walletAddress, events, filteringEvent, getMyPurchasedTickets } = useContext(EventsContext);
   const { openGiftTicket } = useContext(FormContext);
   const [balance, setBalance] = useState(null);
   const [myTickets, setMyTickets] = useState([]);

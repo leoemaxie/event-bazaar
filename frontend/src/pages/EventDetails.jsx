@@ -1,4 +1,3 @@
-import { EventContext } from "../contexts/EventContext";
 import { useContext } from "react";
 import calender from "../assets/images/calendar.png";
 import location from "../assets/images/location.png";
@@ -11,8 +10,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 const EventDetails = () => {
-  const { getEventInfo } = useContext(EventContext);
-  const { buyTicket, getRelistedTicketsOfEvent, buyRelistedTicket } =
+  const { buyTicket, getRelistedTicketsOfEvent, buyRelistedTicket, getEventInfo } =
     useContext(EventsContext);
   const [relistedTickets, setTickets] = useState([]);
 

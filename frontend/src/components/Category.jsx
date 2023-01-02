@@ -1,5 +1,5 @@
 import CategorySlider from "./CategorySlider"
-import { EventContext } from "../contexts/EventContext"
+import { EventsContext } from "../contexts/EventsContext"
 import { useContext } from "react"
 import { categories } from '../../event'
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -11,7 +11,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 const Category = () => {
-    const { eventCategory, handleCategory } = useContext(EventContext)
+    const { eventCategory, handleCategory } = useContext(EventsContext)
 
 
     console.log(eventCategory)

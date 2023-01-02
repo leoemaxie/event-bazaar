@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { EventContext } from "../contexts/EventContext";
 import { EventsContext } from "../contexts/EventsContext";
 import { useContext } from "react";
 import ether from "../assets/images/ethereum.png";
@@ -9,8 +8,7 @@ import Attendants from "./Attendants";
 //const categories = ['All', 'Free', 'Sports', 'Cartoon', 'Virtual World', 'Classic', '3D Abstract', 'Game']
 
 const EventCards = ({ event }) => {
-  const { handleClick } = useContext(EventContext);
-  const { walletAddress } = useContext(EventsContext);
+  const { walletAddress, handleClick } = useContext(EventsContext);
 
   return (
     <div className="eventCard">
