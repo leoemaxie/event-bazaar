@@ -11,7 +11,7 @@ import { ethers } from 'ethers';
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 
 const UserProfile = () => {
-  const { walletAddress, events, filteringEvent, getMyPurchasedTickets } = useContext(EventsContext);
+  const { walletAddress, events, getMyPurchasedTickets } = useContext(EventsContext);
   const { openGiftTicket } = useContext(FormContext);
   const [balance, setBalance] = useState(null);
   const [myTickets, setMyTickets] = useState([]);
@@ -69,7 +69,7 @@ const UserProfile = () => {
           <div className="bg-whiteShade py-8 px-4 rounded-2xl flex-0 h-fit">
             <p className="font-semibold text-2xl ml-2">Upcoming Events</p>
             <div className="mt-8">
-              {events.map((event) => (
+              {events.length > 0 && events.map((event) => (
                 <div
                   key={event.tokenId}
                   className="rounded-lg flex items-center justify-between md:justify-evenly hover:bg-white cursor-pointer p-2"
@@ -82,7 +82,7 @@ const UserProfile = () => {
                   <div className="flex flex-col mr-4">
                     <span className="font-semibold text-sm">
                       {event.metadata.title.length > 15
-                        ? event.title.slice(0, 15) + " ..."
+                        ? event.metadata.title.slice(0, 15) + " ..."
                         : event.metadata.title}
                     </span>
                   </div>
